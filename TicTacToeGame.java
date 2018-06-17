@@ -79,6 +79,7 @@ public class TicTacToeGame {
 			}
 		}
 		
+		// First move in the game
 		move(button,textMessanger,movesValue,firstPlayer());
 	}
 	
