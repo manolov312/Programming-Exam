@@ -176,7 +176,7 @@ public class TicTacToeGame {
 				message = "Вие загубихте!";
 				break;
 			case 6:
-				message = "Желаете ли нова игра?";
+				message = "Желаете ли да играете отново?";
 				break;
 			}
 		}
@@ -197,7 +197,7 @@ public class TicTacToeGame {
 
 	// Reports the result and offers a new game
 	private void newGame() {
-		if (noWinner() && winner() == 0) {
+		if (winner() == 0) {
 			messageNumber =  3;
 			textMessanger.setText(language());
 		} else if (winner() == 1) {
@@ -249,10 +249,32 @@ public class TicTacToeGame {
 	// Makes the move on the computer
 	private void compMove() {
 		int i = 0;
-		while (true) {
-			i = (int) (Math.random() * 9);
-			if (checkEmtiPosition(movesValue[i])) {
+		boolean check = false;
+		for(int j = 0 ; j < 9 ; j += 2) {
+			if(checkEmtiPosition(movesValue[j]) && j != 4) {
+				check = true;
 				break;
+			}
+		}
+		if (checkEmtiPosition(movesValue[4])) {
+			i = 4;
+		} else if (check) {
+			while (true) {
+				i = (int) (Math.random() * 9);
+				if (checkEmtiPosition(movesValue[i])) {
+					if (i % 2 == 0 && i != 4) {
+						break;
+					} 
+				}
+			}
+		} else {
+			while (true) {
+				i = (int) (Math.random() * 9);
+				if (checkEmtiPosition(movesValue[i])) {
+					if (i % 2 != 0) {
+						break;
+					} 
+				}
 			}
 		}
 		movesValue[i] = 2;
@@ -271,15 +293,19 @@ public class TicTacToeGame {
 
 	// Checks for end of game
 	private boolean finTheGame() {
-		boolean fin = false;
+		boolean endGame = true;
 		int winn = winner();
-		if (noWinner() && winn == 0) {
-			fin = true;
-		}
+		for (int i = 0; i < 9; i++) {
+			if (movesValue[i] == 0) {
+				endGame = false;
+				break;
+			}
+			
+		} 
 		if (winn == 1 || winn == 2) {
-			fin = true;
+			endGame = true;
 		}
-		return fin;
+		return endGame;
 	}
 
 	// Checks out who is the winner
@@ -336,15 +362,4 @@ public class TicTacToeGame {
 		return winner;
 	}
 
-	// Check the game has ended without a winner
-	private boolean noWinner() {
-		boolean winn = true;
-		for (int i = 0; i < 9; i++) {
-			if (movesValue[i] == 0) {
-				winn = false;
-				break;
-			}
-		}
-		return winn;
-	}
 }
