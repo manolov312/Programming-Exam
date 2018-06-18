@@ -11,10 +11,17 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;;
 
 public class TicTacToeGame {
 
 	private JFrame frame;
+	private JLabel textMessanger;
+	private JLabel languageEditor;
+    private JButton[] button;
+    private int[] movesValue;
+    private int messageNumber;
 
 	/**
 	 * Launch the application.
@@ -43,20 +50,33 @@ public class TicTacToeGame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		movesValue = new int[9];
+		button = new JButton[9];
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 246, 316);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel textMessanger = new JLabel("new game");
+		textMessanger = new JLabel("Tic Tac Toe");
 		textMessanger.setBounds(0, 0, 240, 50);
 		textMessanger.setHorizontalAlignment(SwingConstants.CENTER);
 		textMessanger.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		frame.getContentPane().add(textMessanger);
 		
-		int [] movesValue = new int[9];
-		JButton[] button = new JButton[9];
+		languageEditor = new JLabel("en");
+		languageEditor.setForeground(Color.RED);
+		languageEditor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				changeLanguage();
+			}
+		});
+		languageEditor.setHorizontalAlignment(SwingConstants.CENTER);
+		languageEditor.setBounds(214, 0, 26, 20);
+		frame.getContentPane().add(languageEditor);
+	
 		for (int i = 0; i < 9; i++) {
 			String str = Integer.toString(i);
 			button[i] = new JButton(str);
@@ -69,7 +89,7 @@ public class TicTacToeGame {
 					public void actionPerformed(ActionEvent arg0) {
 						String index = arg0.getActionCommand();
 						int i = Integer.parseInt(index);
-						action(button, textMessanger, movesValue, i);
+						action(i);
 					}
 				});
 				button[i].setFont(new Font("Tahoma", Font.PLAIN, 0));
@@ -79,54 +99,119 @@ public class TicTacToeGame {
 			}
 		}
 		
-		// First move in the game
-		move(button,textMessanger,movesValue,firstPlayer());
+		firstMove();
+}
+	// Makes the first move if he is on a computer
+	private void firstMove() {
+		boolean first = firstPlayer();
+		message(first);
+		if (first) {
+			compMove();
+		}
 	}
 	
 	// Button action
-	private void action(JButton[] button, JLabel textMessanger, int[] movesValue, int index) {
-		myMove(button, movesValue, index);
-		if (finTheGame(movesValue)) {
-			newGame(button, textMessanger, movesValue);
+	private void action(int index) {
+		myMove(index);
+		if (finTheGame()) {
+			newGame();
 		} else {
-			compMove(button, movesValue);
-			if (finTheGame(movesValue)) {
-				newGame(button, textMessanger, movesValue);
+			compMove();
+			if (finTheGame()) {
+				newGame();
 			}
 		}
 	}
-
-	// Announces who is the first and moves
-	private void move(JButton[] button, JLabel textMessanger, int[] movesValue, boolean first) {
-		message(textMessanger, first);
-		if (first) {
-			compMove(button, movesValue);
+	
+	// Change the language
+	private void changeLanguage() {
+		String lang = languageEditor.getText();
+		if(lang.equals("en")) {
+			languageEditor.setText("bg");
+		} else {
+			languageEditor.setText("en");
 		}
+		textMessanger.setText(language());
+	}
+	
+	// Bg/en messages in the game
+	private String language() {
+		String message = "";
+		if (languageEditor.getText().equals("en")) {
+			switch (messageNumber) {
+			case 1:
+				message = "The computer is first";
+				break;
+			case 2:
+				message = "You're first";
+				break;
+			case 3:
+				message = "No winner";
+				break;
+			case 4:
+				message = "You Winn!";
+				break;
+			case 5:
+				message = "You Lost!";
+				break;
+			case 6:
+				message = "Do you want a new game?";
+				break;
+			}
+		} else {
+			switch (messageNumber) {
+			case 1:
+				message = "Компютъра е на ход";
+				break;
+			case 2:
+				message = "Вие сте на ход";
+				break;
+			case 3:
+				message = "Няма победител";
+				break;
+			case 4:
+				message = "Вие спечелихте!";
+				break;
+			case 5:
+				message = "Вие загубихте!";
+				break;
+			case 6:
+				message = "Желаете ли нова игра?";
+				break;
+			}
+		}
+
+		return message;
 	}
 
 	// To first player message
-	private void message(JLabel textMessanger, boolean first) {
-		if (first) {
-			textMessanger.setText("The computer is first");
-		} else {
-			textMessanger.setText("You're first");
-
-		}
+	private void message(boolean first) {
+			if (first) {
+				messageNumber = 1;
+				textMessanger.setText(language());
+			} else {
+				messageNumber = 2;
+				textMessanger.setText(language());
+			}
 	}
 
 	// Reports the result and offers a new game
-	private void newGame(JButton[] button, JLabel textMessanger, int[] movesValue) {
-		if (noWinner(movesValue) && winner(movesValue) == 0) {
-			textMessanger.setText("No winner");
-		} else if (winner(movesValue) == 1) {
-			textMessanger.setText("You Winn!");
+	private void newGame() {
+		if (noWinner() && winner() == 0) {
+			messageNumber =  3;
+			textMessanger.setText(language());
+		} else if (winner() == 1) {
+			messageNumber = 4;
+			textMessanger.setText(language());
 		} else {
-			textMessanger.setText("You Lost!");
+			messageNumber = 5;
+			textMessanger.setText(language());
 		}
-		int action = JOptionPane.showConfirmDialog(frame, "Do you want a new game?", "", JOptionPane.OK_CANCEL_OPTION);
+		messageNumber = 6;
+		int action = JOptionPane.showConfirmDialog(frame, language(), "", JOptionPane.OK_CANCEL_OPTION);
 		if (action == JOptionPane.OK_OPTION) {
-			reset(button, movesValue);
-			move(button, textMessanger, movesValue, firstPlayer());
+			reset();
+			firstMove();
 		} else {
 			System.exit(0);
 		}
@@ -143,7 +228,8 @@ public class TicTacToeGame {
 	}
 
 	// Resets the values
-	private void reset(JButton[] button, int[] movesValue) {
+	private void reset() {
+			messageNumber = 0;
 		for (int i = 0; i < 9; i++) {
 			button[i].setFont(new Font("Tahoma", Font.PLAIN, 0));
 			button[i].setText(Integer.toString(i));
@@ -152,7 +238,7 @@ public class TicTacToeGame {
 	}
 
 	// Makes the player move
-	private void myMove(JButton[] button, int[] movesValue, int i) {
+	private void myMove(int i) {
 		if (checkEmtiPosition(movesValue[i])) {
 			button[i].setFont(new Font("Tahoma", Font.PLAIN, 30));
 			button[i].setText("X");
@@ -161,7 +247,7 @@ public class TicTacToeGame {
 	}
 
 	// Makes the move on the computer
-	private void compMove(JButton[] button, int[] movesValue) {
+	private void compMove() {
 		int i = 0;
 		while (true) {
 			i = (int) (Math.random() * 9);
@@ -184,10 +270,10 @@ public class TicTacToeGame {
 	}
 
 	// Checks for end of game
-	private boolean finTheGame(int[] movesValue) {
+	private boolean finTheGame() {
 		boolean fin = false;
-		int winn = winner(movesValue);
-		if (noWinner(movesValue) && winn == 0) {
+		int winn = winner();
+		if (noWinner() && winn == 0) {
 			fin = true;
 		}
 		if (winn == 1 || winn == 2) {
@@ -197,7 +283,7 @@ public class TicTacToeGame {
 	}
 
 	// Checks out who is the winner
-	private int winner(int[] movesValue) {
+	private int winner() {
 		boolean step = true;
 		int winner = 0;
 		int i = 0;
@@ -251,7 +337,7 @@ public class TicTacToeGame {
 	}
 
 	// Check the game has ended without a winner
-	private boolean noWinner(int[] movesValue) {
+	private boolean noWinner() {
 		boolean winn = true;
 		for (int i = 0; i < 9; i++) {
 			if (movesValue[i] == 0) {
