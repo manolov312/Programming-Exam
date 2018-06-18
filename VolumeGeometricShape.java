@@ -17,9 +17,10 @@ import java.awt.event.ActionEvent;
 public class VolumeGeometricShape {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textNumberSidesBase;
+	private JTextField textLengthSide;
+	private JTextField textHeight;
+	private JLabel resultMessages;
 
 	/**
 	 * Launch the application.
@@ -73,62 +74,62 @@ public class VolumeGeometricShape {
 		label_1.setBounds(194, 139, 206, 22);
 		frame.getContentPane().add(label_1);
 		
-		textField = new JTextField();
-		textField.addMouseListener(new MouseAdapter() {
+		textNumberSidesBase = new JTextField();
+		textNumberSidesBase.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				textField.setText("");
+				textNumberSidesBase.setText("");
 			}
 		});
-		textField.setBounds(204, 44, 196, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textNumberSidesBase.setBounds(204, 44, 196, 20);
+		frame.getContentPane().add(textNumberSidesBase);
+		textNumberSidesBase.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.addMouseListener(new MouseAdapter() {
+		textLengthSide = new JTextField();
+		textLengthSide.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				textField_1.setText("");
+				textLengthSide.setText("");
 			}
 		});
-		textField_1.setColumns(10);
-		textField_1.setBounds(204, 108, 196, 20);
-		frame.getContentPane().add(textField_1);
+		textLengthSide.setColumns(10);
+		textLengthSide.setBounds(204, 108, 196, 20);
+		frame.getContentPane().add(textLengthSide);
 		
-		textField_2 = new JTextField();
-		textField_2.addMouseListener(new MouseAdapter() {
+		textHeight = new JTextField();
+		textHeight.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				textField_2.setText("");
+				textHeight.setText("");
 			}
 		});
-		textField_2.setColumns(10);
-		textField_2.setBounds(204, 165, 196, 20);
-		frame.getContentPane().add(textField_2);
+		textHeight.setColumns(10);
+		textHeight.setBounds(204, 165, 196, 20);
+		frame.getContentPane().add(textHeight);
 		
-		JLabel label_2 = new JLabel(" Резултат     ");
-		label_2.setHorizontalAlignment(SwingConstants.LEFT);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_2.setBounds(10, 171, 195, 80);
-		frame.getContentPane().add(label_2);
+		resultMessages = new JLabel(" Резултат     ");
+		resultMessages.setHorizontalAlignment(SwingConstants.LEFT);
+		resultMessages.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		resultMessages.setBounds(10, 171, 195, 80);
+		frame.getContentPane().add(resultMessages);
 		
 		JButton button = new JButton("ИЗЧИСЛИ");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				label_2.setText("Резултат");
+				resultMessages.setText("Резултат");
 				try {
-					int side = Integer.parseInt(textField.getText());
-					double lengthSide = Double.parseDouble(textField_1.getText());
-					double height = Double.parseDouble(textField_2.getText());
+					int side = Integer.parseInt(textNumberSidesBase.getText());
+					double lengthSide = Double.parseDouble(textLengthSide.getText());
+					double height = Double.parseDouble(textHeight.getText());
 					if (side < 3 || lengthSide <= 0 || height < 0) {
-						label_2.setText("Неправилни параметри!");
+						resultMessages.setText("Неправилни параметри!");
 					} else {
 						double area = side * lengthSide * lengthSide / Math.tan(Math.PI / side) / 4;
 						double volume = area * height / 3;
-						label_2.setText(String.format("V = %.2f", volume));
+						resultMessages.setText(String.format("V = %.2f", volume));
 					}
 				} catch (NumberFormatException e) {
-					label_2.setText("Неправилни параметри!");
+					resultMessages.setText("Неправилни параметри!");
 				}
 			}
 		});
