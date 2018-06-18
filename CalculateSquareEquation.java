@@ -12,22 +12,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CalculateSquareEquation {
 
 	private JFrame frame;
-	private JTextField textCoefficient_A;
-	private JTextField textField_sign_B;
-	private JTextField textCoefficient_B;
-	private JTextField textField_sign_C;
-	private JTextField textCoefficient_C;
-	private JTextField textField_sign_A;
-	private JLabel label_4;
-	private JLabel label_5;
-	private JLabel label_6;
-	private JLabel label_discriminant;
-	private JLabel label_result1;
-	private JLabel label_result2;
+	private JTextField textFirstCoefficient;
+	private JLabel signSecondCoefficient;
+	private JTextField texteScondCoefficient;
+	private JLabel signThirdCoefficient;
+	private JTextField textThirdCoefficient;
+	private JLabel signFirstCoefficient;
+	private JLabel labelDiscriminant;
+	private JLabel labelFirstResult;
+	private JLabel labelSecondResult;
+	private JLabel labelResultMessages;
+	private double firstCoefficient;
+	private double secondCoefficient;
+	private double thirdCoefficient;
+	private double discrim;
 
 	/**
 	 * Launch the application.
@@ -68,36 +71,37 @@ public class CalculateSquareEquation {
 		label.setBounds(36, 11, 368, 22);
 		frame.getContentPane().add(label);
 		
-		textCoefficient_A = new JTextField();
-		textCoefficient_A.addMouseListener(new MouseAdapter() {
+		textFirstCoefficient = new JTextField();
+		textFirstCoefficient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				textCoefficient_A.setText("");
+				textFirstCoefficient.setText("");
 			}
 		});
 		
-		textField_sign_A = new JTextField();
-		textField_sign_A.addMouseListener(new MouseAdapter() {
+		signFirstCoefficient = new JLabel();
+		signFirstCoefficient.setForeground(Color.BLUE);
+		signFirstCoefficient.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				textField_sign_A.setText(changeSign(textField_sign_A.getText()));
+			public void mouseClicked(MouseEvent arg0) {
+				signFirstCoefficient.setText(changeSign(signFirstCoefficient.getText()));
 			}
 		});
-		textField_sign_A.setText("+/-");
-		textField_sign_A.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_sign_A.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField_sign_A.setColumns(10);
-		textField_sign_A.setBounds(10, 44, 34, 29);
-		frame.getContentPane().add(textField_sign_A);
+		signFirstCoefficient.setText("+");
+		signFirstCoefficient.setHorizontalAlignment(SwingConstants.CENTER);
+		signFirstCoefficient.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		signFirstCoefficient.setBounds(10, 44, 34, 29);
+		frame.getContentPane().add(signFirstCoefficient);
 		
-		textCoefficient_A.setHorizontalAlignment(SwingConstants.CENTER);
-		textCoefficient_A.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textCoefficient_A.setText("а");
-		textCoefficient_A.setBounds(54, 44, 52, 30);
-		frame.getContentPane().add(textCoefficient_A);
-		textCoefficient_A.setColumns(10);
+		textFirstCoefficient.setHorizontalAlignment(SwingConstants.CENTER);
+		textFirstCoefficient.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textFirstCoefficient.setText("а");
+		textFirstCoefficient.setBounds(54, 44, 52, 30);
+		frame.getContentPane().add(textFirstCoefficient);
+		textFirstCoefficient.setColumns(10);
 		
 		JLabel lblX = new JLabel("X");
+		lblX.setForeground(Color.BLUE);
 		lblX.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblX.setHorizontalAlignment(SwingConstants.CENTER);
 		lblX.setBounds(109, 44, 19, 29);
@@ -108,164 +112,118 @@ public class CalculateSquareEquation {
 		label_1.setBounds(125, 44, 14, 14);
 		frame.getContentPane().add(label_1);
 		
-		textField_sign_B = new JTextField();
-		textField_sign_B.addMouseListener(new MouseAdapter() {
+		signSecondCoefficient = new JLabel();
+		signSecondCoefficient.setForeground(Color.BLUE);
+		signSecondCoefficient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				textField_sign_B.setText(changeSign(textField_sign_B.getText()));
+				signSecondCoefficient.setText(changeSign(signSecondCoefficient.getText()));
 			}
 		});
-		textField_sign_B.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_sign_B.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField_sign_B.setText("+/-");
-		textField_sign_B.setBounds(138, 44, 34, 29);
-		frame.getContentPane().add(textField_sign_B);
-		textField_sign_B.setColumns(10);
+		signSecondCoefficient.setHorizontalAlignment(SwingConstants.CENTER);
+		signSecondCoefficient.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		signSecondCoefficient.setText("+");
+		signSecondCoefficient.setBounds(138, 44, 34, 29);
+		frame.getContentPane().add(signSecondCoefficient);
 		
-		textCoefficient_B = new JTextField();
-		textCoefficient_B.addMouseListener(new MouseAdapter() {
+		texteScondCoefficient = new JTextField();
+		texteScondCoefficient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				textCoefficient_B.setText("");
+				texteScondCoefficient.setText("");
 			}
 		});
-		textCoefficient_B.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textCoefficient_B.setHorizontalAlignment(SwingConstants.CENTER);
-		textCoefficient_B.setText("b");
-		textCoefficient_B.setBounds(182, 44, 56, 29);
-		frame.getContentPane().add(textCoefficient_B);
-		textCoefficient_B.setColumns(10);
+		texteScondCoefficient.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		texteScondCoefficient.setHorizontalAlignment(SwingConstants.CENTER);
+		texteScondCoefficient.setText("b");
+		texteScondCoefficient.setBounds(182, 44, 56, 29);
+		frame.getContentPane().add(texteScondCoefficient);
+		texteScondCoefficient.setColumns(10);
 		
 		JLabel label_2 = new JLabel("X");
+		label_2.setForeground(Color.BLUE);
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		label_2.setBounds(241, 44, 19, 29);
 		frame.getContentPane().add(label_2);
 		
-		textField_sign_C = new JTextField();
-		textField_sign_C.addMouseListener(new MouseAdapter() {
+		signThirdCoefficient = new JLabel();
+		signThirdCoefficient.setForeground(Color.BLUE);
+		signThirdCoefficient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				textField_sign_C.setText(changeSign(textField_sign_C.getText()));
+				signThirdCoefficient.setText(changeSign(signThirdCoefficient.getText()));
 			}
 		});
-		textField_sign_C.setText("+/-");
-		textField_sign_C.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_sign_C.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField_sign_C.setColumns(10);
-		textField_sign_C.setBounds(270, 45, 34, 29);
-		frame.getContentPane().add(textField_sign_C);
+		signThirdCoefficient.setText("+");
+		signThirdCoefficient.setHorizontalAlignment(SwingConstants.CENTER);
+		signThirdCoefficient.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		signThirdCoefficient.setBounds(270, 45, 34, 29);
+		frame.getContentPane().add(signThirdCoefficient);
 		
-		textCoefficient_C = new JTextField();
-		textCoefficient_C.addMouseListener(new MouseAdapter() {
+		textThirdCoefficient = new JTextField();
+		textThirdCoefficient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				textCoefficient_C.setText("");
+				textThirdCoefficient.setText("");
 			}
 		});
-		textCoefficient_C.setText("c");
-		textCoefficient_C.setHorizontalAlignment(SwingConstants.CENTER);
-		textCoefficient_C.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textCoefficient_C.setColumns(10);
-		textCoefficient_C.setBounds(314, 44, 55, 29);
-		frame.getContentPane().add(textCoefficient_C);
+		textThirdCoefficient.setText("c");
+		textThirdCoefficient.setHorizontalAlignment(SwingConstants.CENTER);
+		textThirdCoefficient.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textThirdCoefficient.setColumns(10);
+		textThirdCoefficient.setBounds(314, 44, 55, 29);
+		frame.getContentPane().add(textThirdCoefficient);
 		
-		JLabel label_3 = new JLabel("= 0");
+		JLabel label_3 = new JLabel("= O");
+		label_3.setForeground(Color.BLUE);
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		label_3.setBounds(374, 44, 45, 25);
 		frame.getContentPane().add(label_3);
 		
-		JLabel result = new JLabel("Резултат :");
-		result.setHorizontalAlignment(SwingConstants.CENTER);
-		result.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		result.setBounds(10, 143, 409, 29);
-		frame.getContentPane().add(result);
+		labelResultMessages = new JLabel("Резултат :");
+		labelResultMessages.setHorizontalAlignment(SwingConstants.CENTER);
+		labelResultMessages.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		labelResultMessages.setBounds(10, 143, 409, 29);
+		frame.getContentPane().add(labelResultMessages);
 		
-		label_4 = new JLabel("D =");
+		JLabel label_4 = new JLabel("D =");
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		label_4.setBounds(10, 167, 63, 44);
 		frame.getContentPane().add(label_4);
 		
-		label_5 = new JLabel("X1 =");
+		JLabel label_5 = new JLabel("X1 =");
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		label_5.setBounds(10, 206, 82, 44);
 		frame.getContentPane().add(label_5);
 		
-		label_6 = new JLabel("X2 =");
+		JLabel label_6 = new JLabel("X2 =");
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		label_6.setBounds(226, 206, 72, 44);
 		frame.getContentPane().add(label_6);
 		
-		label_discriminant = new JLabel("");
-		label_discriminant.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		label_discriminant.setBounds(68, 167, 351, 44);
-		frame.getContentPane().add(label_discriminant);
+		labelDiscriminant = new JLabel("");
+		labelDiscriminant.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		labelDiscriminant.setBounds(68, 167, 351, 44);
+		frame.getContentPane().add(labelDiscriminant);
 		
-		label_result1 = new JLabel("");
-		label_result1.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		label_result1.setBounds(83, 207, 140, 44);
-		frame.getContentPane().add(label_result1);
+		labelFirstResult = new JLabel("");
+		labelFirstResult.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		labelFirstResult.setBounds(83, 207, 140, 44);
+		frame.getContentPane().add(labelFirstResult);
 		
-		label_result2 = new JLabel("");
-		label_result2.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		label_result2.setBounds(298, 206, 121, 44);
-		frame.getContentPane().add(label_result2);
+		labelSecondResult = new JLabel("");
+		labelSecondResult.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		labelSecondResult.setBounds(298, 206, 121, 44);
+		frame.getContentPane().add(labelSecondResult);
 		
 		
 		
 		JButton button = new JButton("ИЗЧИСЛИ");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					String sign_A = textField_sign_A.getText();
-					String sign_B = textField_sign_B.getText();
-					String sign_C = textField_sign_C.getText();
-					double a = Double.parseDouble(textCoefficient_A.getText());
-					double b = Double.parseDouble(textCoefficient_B.getText());
-					double c = Double.parseDouble(textCoefficient_C.getText());
-					double discrim;
-					while (true) {
-						if (check(sign_A, sign_B, sign_C)) {
-							result.setText("Некоректно въведени параметри!");
-							label_discriminant.setText("n/a");
-							label_result1.setText("n/a");
-							label_result2.setText("n/a");
-							break;
-						}
-						a = coefficientSign(a, sign_A);
-						b = coefficientSign(b, sign_B);
-						c = coefficientSign(c, sign_C);
-						discrim = discriminant(a, b, c);
-						if (discrim < 0 || (a == 0 && b == 0 && c != 0)) {
-							result.setText("Уравнението няма реални корени.");
-							label_discriminant.setText("" + discrim);
-							label_result1.setText("n/a");
-							label_result2.setText("n/a");
-							break;
-						}
-						if (a == 0 && b == 0 && c == 0) {
-							result.setText("Всички реални числа са корени.");
-							label_discriminant.setText("" + discrim);
-							label_result1.setText("(-∞,+∞)");
-							label_result2.setText("(-∞,+∞)");
-							break;
-						}
-						result.setText("Резултат :");
-						label_discriminant.setText(String.format("%.2f", discrim));
-						discrim = Math.sqrt(discrim);
-						double result_X1 = calculate(a, b, c, discrim);
-						double result_X2 = calculate(a, b, c, -discrim);
-						label_result1.setText(String.format("%.2f", result_X1));
-						label_result2.setText(String.format("%.2f", result_X2));
-						break;
-					}
-				} catch (NumberFormatException e) {
-					result.setText("Некоректно въведени параметри!");
-					label_discriminant.setText("n/a");
-					label_result1.setText("n/a");
-					label_result2.setText("n/a");
-				}
+				buttonAction();
 			}
 		});
 
@@ -273,9 +231,45 @@ public class CalculateSquareEquation {
 		button.setBounds(10, 97, 409, 35);
 		frame.getContentPane().add(button);
 	}
+	// The button action
+	private void buttonAction() {
+		try {
+			String signA = signFirstCoefficient.getText();
+			String signB = signSecondCoefficient.getText();
+			String signC = signThirdCoefficient.getText();
+			firstCoefficient = coefficientSign(Double.parseDouble(textFirstCoefficient.getText()), signA);
+			secondCoefficient = coefficientSign(Double.parseDouble(texteScondCoefficient.getText()), signB);
+			thirdCoefficient = coefficientSign(Double.parseDouble(textThirdCoefficient.getText()), signC);
+			discrim = discriminant();
+			if (discrim < 0 || (firstCoefficient == 0 && secondCoefficient == 0 && thirdCoefficient != 0)) {
+				labelResultMessages.setText("Уравнението няма реални корени.");
+				labelDiscriminant.setText("" + discrim);
+				labelFirstResult.setText("n/a");
+				labelSecondResult.setText("n/a");
+			} else if (firstCoefficient == 0 && secondCoefficient == 0 && thirdCoefficient == 0) {
+				labelResultMessages.setText("Всички реални числа са корени.");
+				labelDiscriminant.setText("" + discrim);
+				labelFirstResult.setText("(-∞,+∞)");
+				labelSecondResult.setText("(-∞,+∞)");
+			} else {
+				labelResultMessages.setText("Резултат :");
+				labelDiscriminant.setText(String.format("%.2f", discrim));
+				discrim = Math.sqrt(discrim);
+				double result_X1 = calculate();
+				double result_X2 = calculate();
+				labelFirstResult.setText(String.format("%.2f", result_X1));
+				labelSecondResult.setText(String.format("%.2f", result_X2));
+			}
+		} catch (Exception e) {
+			labelResultMessages.setText("Некоректно въведени параметри!");
+			labelDiscriminant.setText("n/a");
+			labelFirstResult.setText("n/a");
+			labelSecondResult.setText("n/a");
+		}
+	}
 	
-	// Променя знака пред коефициента
-	private static String changeSign(String sign) {
+	// Changes the character before the coefficient
+	private String changeSign(String sign) {
 		if (sign.equals("+")) {
 			return "-";
 		} else {
@@ -283,36 +277,26 @@ public class CalculateSquareEquation {
 		}
 	}
 
-	// Уточнява знака пред коефициента
-	private static double coefficientSign(double num, String sign) {
+	// Specifies the character before the coefficient
+	private double coefficientSign(double coefficient, String sign) {
 		if (sign.equals("-")) {
-			num = -num;
+			coefficient = -coefficient;
 		}
-		return num;
+		return coefficient;
 	}
 
-	// Проверява дали знаците пред коефициентите са зададени правилно
-	private static boolean check(String signA, String signB, String signC) {
-		boolean check = true;
-		if((signA.equals("+") || signA.equals("-")) && (signB.equals("+")
-				|| signB.equals("-")) && (signC.equals("+") || signC.equals("-"))) {
-			check = false;
-		}
-		return check;
-	}
-	
-	// Изчислява дискриминантата
-	private static double discriminant(double a, double b, double c) {
-		return  b * b - 4 * a * c ;
+	// Calculates the discriminant
+	private double discriminant() {
+		return  secondCoefficient * secondCoefficient - 4 * firstCoefficient * thirdCoefficient ;
 		
 	}
 	
-	// Изчислява корените
-	private static double calculate(double a, double b, double c, double discrim) {
-		if (a == 0) {
-			return -c / b;
+	// Calculates the solutions of the equation
+	private double calculate() {
+		if (firstCoefficient == 0) {
+			return -thirdCoefficient / secondCoefficient;
 		} else {
-			return (-b + discrim) / (2 * a);
+			return (-secondCoefficient + discrim) / (2 * firstCoefficient);
 		}
 	}
 }
