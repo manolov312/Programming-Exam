@@ -79,7 +79,7 @@ public class TicTacToeGame {
 		
 		for (int i = 0; i < 9; i++) {                 
 			String index = Integer.toString(i);       // Initializes the buttons and records them in an array
-			button[i] = new JButton(index);          // and adds an index to the button.
+			button[i] = new JButton(index);          //          and adds an index to the button.
 		}
 		int i = 0 ;                                    //
 		for (int j = 0; j < 3; j++) {                 // Distributes the buttons on the board
@@ -88,7 +88,7 @@ public class TicTacToeGame {
 				button[i].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						String index = arg0.getActionCommand();     //
-						int position = Integer.parseInt(index);    // Takes an index and acts.
+						int position = Integer.parseInt(index);    // Takes the index and takes action.
 						action(position);                         //
 					}
 				});
@@ -100,7 +100,7 @@ public class TicTacToeGame {
 		}
 		firstMove();
 }
-	// Gives the first move to the chosen player.
+	// Gives first move to the chosen player.
 	private void firstMove() {
 		boolean first = firstPlayer();
 		message(first);
@@ -183,7 +183,7 @@ public class TicTacToeGame {
 		return message;
 	}
 
-	// To first player message
+	// Message who is first
 	private void message(boolean first) {
 			if (first) {
 				messageNumber = 1;
@@ -194,7 +194,7 @@ public class TicTacToeGame {
 			}
 	}
 
-	// Reports the result and offers a new game
+	// Reports the result and offers for a new game
 	private void newGame() {
 		if (winner() == 0) {
 			messageNumber =  3;
@@ -236,7 +236,7 @@ public class TicTacToeGame {
 		}
 	}
 
-	// Makes the player move
+	// Makes a player move
 	private void myMove(int move) {
 		if (checkEmtyPosition(movesValue[move])) {
 			button[move].setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -245,7 +245,7 @@ public class TicTacToeGame {
 		}
 	}
 
-	// Makes the move on the computer
+	// Makes the computer's move
 	private void compMove() {
 		int position = 0;
 		boolean check = false;
@@ -255,9 +255,9 @@ public class TicTacToeGame {
 				break;
 			}
 		}
-		if (checkEmtyPosition(movesValue[4])) {                 // Chooses a centers if the empty.
+		if (checkEmtyPosition(movesValue[4])) {                 // Chooses the center if it is empty.
 			position = 4;
-		} else if (check) {                             // Chooses the some angle if the empty.
+		} else if (check) {                             // Selects an angle if it is empty
 			while (true) {
 				position = (int) (Math.random() * 9);
 				if (checkEmtyPosition(movesValue[position])) {
@@ -266,7 +266,7 @@ public class TicTacToeGame {
 					} 
 				}
 			}
-		} else {                               // Chooses some empty position.
+		} else {                               // Choose any empty position.
 			while (true) {
 				position = (int) (Math.random() * 8);
 				if (checkEmtyPosition(movesValue[position])) {
@@ -288,7 +288,7 @@ public class TicTacToeGame {
 		}
 	}
 
-	// Checks for end of game. Returns true for end the game.
+	// Checks for end of the game. Returns true if the game has finished.
 	private boolean finTheGame() {
 		boolean endGame = true;
 		int winn = winner();
@@ -305,8 +305,8 @@ public class TicTacToeGame {
 		return endGame;
 	}
 
-	// Checks out who is the winner. Returns 0 if no winner, 2 if the winner is the 
-	// player, and 1 if the winner is the computer.
+	// Checks who is the winner. Returns 0 if no winner, 1 if the winner is the 
+	//                 player, and 2 if the winner is the computer.
 	private int winner() {
 		boolean step = true;
 		int winner = 0;
