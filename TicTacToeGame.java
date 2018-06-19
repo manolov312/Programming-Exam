@@ -77,19 +77,19 @@ public class TicTacToeGame {
 		languageEditor.setBounds(214, 0, 26, 20);
 		frame.getContentPane().add(languageEditor);
 		
-		for (int i = 0; i < 9; i++) {
-			String str = Integer.toString(i);
-			button[i] = new JButton(str);
+		for (int i = 0; i < 9; i++) {                 
+			String index = Integer.toString(i);       // Initializes the buttons and records them in an array
+			button[i] = new JButton(index);          // and adds an index to the button.
 		}
-		int i = 0 ;
-		for (int j = 0; j < 3; j++) {
-			for (int k = 0; k < 3; k++) {
+		int i = 0 ;                                    //
+		for (int j = 0; j < 3; j++) {                 // Distributes the buttons on the board
+			for (int k = 0; k < 3; k++) {            //
 				button[i].setForeground(Color.BLACK);
 				button[i].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						String str = arg0.getActionCommand();
-						int index = Integer.parseInt(str);
-						action(index);
+						String index = arg0.getActionCommand();     //
+						int position = Integer.parseInt(index);    // Takes an index and acts.
+						action(position);                         //
 					}
 				});
 				button[i].setFont(new Font("Tahoma", Font.PLAIN, 0));
@@ -100,7 +100,7 @@ public class TicTacToeGame {
 		}
 		firstMove();
 }
-	// Makes the first move if he is on a computer
+	// Gives the first move to the chosen player.
 	private void firstMove() {
 		boolean first = firstPlayer();
 		message(first);
@@ -109,9 +109,9 @@ public class TicTacToeGame {
 		}
 	}
 	
-	// Button action
-	private void action(int index) {
-		myMove(index);
+	// Buttons action
+	private void action(int position) {
+		myMove(position);
 		if (finTheGame()) {
 			newGame();
 		} else {
@@ -218,7 +218,7 @@ public class TicTacToeGame {
 
 	// Decides who to be first
 	private boolean firstPlayer() {
-		int choicer = (int) (Math.random() * 33);
+		int choicer = (int) (Math.random() * 312);
 		if (choicer % 2 == 0) {
 			return true;
 		} else {
@@ -237,50 +237,50 @@ public class TicTacToeGame {
 	}
 
 	// Makes the player move
-	private void myMove(int i) {
-		if (checkEmtiPosition(movesValue[i])) {
-			button[i].setFont(new Font("Tahoma", Font.PLAIN, 30));
-			button[i].setText("X");
-			movesValue[i] = 1;
+	private void myMove(int move) {
+		if (checkEmtyPosition(movesValue[move])) {
+			button[move].setFont(new Font("Tahoma", Font.PLAIN, 30));
+			button[move].setText("X");
+			movesValue[move] = 1;
 		}
 	}
 
 	// Makes the move on the computer
 	private void compMove() {
-		int i = 0;
+		int position = 0;
 		boolean check = false;
 		for(int j = 0 ; j < 9 ; j += 2) {
-			if(checkEmtiPosition(movesValue[j]) && j != 4) {
+			if(checkEmtyPosition(movesValue[j]) && j != 4) {
 				check = true;
 				break;
 			}
 		}
-		if (checkEmtiPosition(movesValue[4])) {
-			i = 4;
-		} else if (check) {
+		if (checkEmtyPosition(movesValue[4])) {                 // Chooses a centers if the empty.
+			position = 4;
+		} else if (check) {                             // Chooses the some angle if the empty.
 			while (true) {
-				i = (int) (Math.random() * 9);
-				if (checkEmtiPosition(movesValue[i])) {
-					if (i % 2 == 0 && i != 4) {
+				position = (int) (Math.random() * 9);
+				if (checkEmtyPosition(movesValue[position])) {
+					if (position % 2 == 0 && position != 4) {
 						break;
 					} 
 				}
 			}
-		} else {
+		} else {                               // Chooses some empty position.
 			while (true) {
-				i = (int) (Math.random() * 8);
-				if (checkEmtiPosition(movesValue[i])) {
+				position = (int) (Math.random() * 8);
+				if (checkEmtyPosition(movesValue[position])) {
 					break;
 				}
 			}
 		}
-		movesValue[i] = 2;
-		button[i].setFont(new Font("Tahoma", Font.PLAIN, 30));
-		button[i].setText("O");
+		movesValue[position] = 2;
+		button[position].setFont(new Font("Tahoma", Font.PLAIN, 30));
+		button[position].setText("O");
 	}
 
-	// Checks for empty position
-	private boolean checkEmtiPosition(int positionValue) {
+	// Checks for empty position.Returns true if the position is empty.
+	private boolean checkEmtyPosition(int positionValue) {
 		if (positionValue == 1 || positionValue == 2) {
 			return false;
 		} else {
@@ -288,7 +288,7 @@ public class TicTacToeGame {
 		}
 	}
 
-	// Checks for end of game
+	// Checks for end of game. Returns true for end the game.
 	private boolean finTheGame() {
 		boolean endGame = true;
 		int winn = winner();
@@ -305,7 +305,8 @@ public class TicTacToeGame {
 		return endGame;
 	}
 
-	// Checks out who is the winner
+	// Checks out who is the winner. Returns 0 if no winner, 2 if the winner is the 
+	// player, and 1 if the winner is the computer.
 	private int winner() {
 		boolean step = true;
 		int winner = 0;
