@@ -76,29 +76,28 @@ public class TicTacToeGame {
 		languageEditor.setHorizontalAlignment(SwingConstants.CENTER);
 		languageEditor.setBounds(214, 0, 26, 20);
 		frame.getContentPane().add(languageEditor);
-	
+		
 		for (int i = 0; i < 9; i++) {
 			String str = Integer.toString(i);
 			button[i] = new JButton(str);
 		}
 		int i = 0 ;
-		for (int k = 0; k < 3; k++) {
-			for (int j = 0; j < 3; j++) {
+		for (int j = 0; j < 3; j++) {
+			for (int k = 0; k < 3; k++) {
 				button[i].setForeground(Color.BLACK);
 				button[i].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						String index = arg0.getActionCommand();
-						int i = Integer.parseInt(index);
-						action(i);
+						String str = arg0.getActionCommand();
+						int index = Integer.parseInt(str);
+						action(index);
 					}
 				});
 				button[i].setFont(new Font("Tahoma", Font.PLAIN, 0));
-				button[i].setBounds(j * 80, 50 + k * 80, 80, 80);
+				button[i].setBounds(k * 80, 50 + j * 80, 80, 80);
 				frame.getContentPane().add(button[i]);
 				i++;
 			}
 		}
-		
 		firstMove();
 }
 	// Makes the first move if he is on a computer
@@ -269,11 +268,9 @@ public class TicTacToeGame {
 			}
 		} else {
 			while (true) {
-				i = (int) (Math.random() * 9);
+				i = (int) (Math.random() * 8);
 				if (checkEmtiPosition(movesValue[i])) {
-					if (i % 2 != 0) {
-						break;
-					} 
+					break;
 				}
 			}
 		}
