@@ -160,10 +160,10 @@ public class TicTacToeGame {
 		} else {
 			switch (messageNumber) {
 			case 1:
-				message = "Компютъра е на ход";
+				message = "Компютъра е пръв";
 				break;
 			case 2:
-				message = "Вие сте на ход";
+				message = "Вие сте пръв";
 				break;
 			case 3:
 				message = "Няма победител";
