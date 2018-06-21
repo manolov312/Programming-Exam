@@ -23,6 +23,7 @@ public class TicTacToeGame {
     private JButton[] button;
     private int[] movesValue;
     private int messageNumber;
+    private Random random;
 
 	/**
 	 * Launch the application.
@@ -53,6 +54,7 @@ public class TicTacToeGame {
 	private void initialize() {
 		movesValue = new int[9];
 		button = new JButton[9];
+		random = new Random();
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 246, 316);
@@ -103,7 +105,7 @@ public class TicTacToeGame {
 }
 	// Gives first move to the chosen player.
 	private void firstMove() {
-		boolean first = firstPlayer();
+		boolean first = random.nextBoolean();      // Decides who to be first
 		message(first);
 		if (first) {
 			compMove();
@@ -217,12 +219,6 @@ public class TicTacToeGame {
 		}
 	}
 
-	// Decides who to be first
-	private boolean firstPlayer() {
-		 Random rand = new Random(); 
-	        return rand.nextBoolean(); 
-	}
-
 	// Resets the values
 	private void reset() {
 			messageNumber = 0;
@@ -246,7 +242,6 @@ public class TicTacToeGame {
 	private void compMove() {
 		int position = 0;
 		boolean check = false;
-		Random rand = new Random();
 		for(int j = 0 ; j < 9 ; j += 2) {
 			if(checkEmtyPosition(movesValue[j]) && j != 4) {
 				check = true;
@@ -257,7 +252,7 @@ public class TicTacToeGame {
 			position = 4;
 		} else if (check) {                             // Selects an angle if it is empty
 			while (true) {
-				position = rand.nextInt(9);
+				position = random.nextInt(9);
 				if (checkEmtyPosition(movesValue[position])) {
 					if (position % 2 == 0 && position != 4) {
 						break;
@@ -266,7 +261,7 @@ public class TicTacToeGame {
 			}
 		} else {                               // Choose any empty position.
 			while (true) {
-				position = rand.nextInt(8);
+				position = random.nextInt(8);
 				if (checkEmtyPosition(movesValue[position])) {
 					break;
 				}
