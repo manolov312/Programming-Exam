@@ -12,7 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;;
+import java.awt.event.MouseEvent;
+import java.util.Random;;
 
 public class TicTacToeGame {
 
@@ -218,12 +219,8 @@ public class TicTacToeGame {
 
 	// Decides who to be first
 	private boolean firstPlayer() {
-		int choicer = (int) (Math.random() * 312);
-		if (choicer % 2 == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		 Random rand = new Random(); 
+	        return rand.nextBoolean(); 
 	}
 
 	// Resets the values
@@ -249,6 +246,7 @@ public class TicTacToeGame {
 	private void compMove() {
 		int position = 0;
 		boolean check = false;
+		Random rand = new Random();
 		for(int j = 0 ; j < 9 ; j += 2) {
 			if(checkEmtyPosition(movesValue[j]) && j != 4) {
 				check = true;
@@ -259,7 +257,7 @@ public class TicTacToeGame {
 			position = 4;
 		} else if (check) {                             // Selects an angle if it is empty
 			while (true) {
-				position = (int) (Math.random() * 9);
+				position = rand.nextInt(9);
 				if (checkEmtyPosition(movesValue[position])) {
 					if (position % 2 == 0 && position != 4) {
 						break;
@@ -268,7 +266,7 @@ public class TicTacToeGame {
 			}
 		} else {                               // Choose any empty position.
 			while (true) {
-				position = (int) (Math.random() * 8);
+				position = rand.nextInt(8);
 				if (checkEmtyPosition(movesValue[position])) {
 					break;
 				}
