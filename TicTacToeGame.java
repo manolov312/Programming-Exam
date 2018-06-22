@@ -13,10 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;;
+import java.util.Random;
 
 public class TicTacToeGame {
-
+	
 	private JFrame frame;
 	private JLabel textMessanger;
 	private JLabel languageEditor;
@@ -101,8 +101,9 @@ public class TicTacToeGame {
 				i++;
 			}
 		}
+		
 		firstMove();
-}
+	}
 	// Gives first move to the chosen player.
 	private void firstMove() {
 		boolean first = random.nextBoolean();      // Decides who to be first
@@ -127,8 +128,7 @@ public class TicTacToeGame {
 	
 	// Change the language
 	private void changeLanguage() {
-		String lang = languageEditor.getText();
-		if(lang.equals("en")) {
+		if(languageEditor.getText().equals("en")) {
 			languageEditor.setText("bg");
 		} else {
 			languageEditor.setText("en");
