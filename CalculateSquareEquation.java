@@ -218,8 +218,6 @@ public class CalculateSquareEquation {
 		labelSecondResult.setBounds(298, 206, 121, 44);
 		frame.getContentPane().add(labelSecondResult);
 		
-		
-		
 		JButton button = new JButton("ИЗЧИСЛИ");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -255,8 +253,8 @@ public class CalculateSquareEquation {
 				labelResultMessages.setText("Резултат :");
 				labelDiscriminant.setText(String.format("%.2f", discrim));
 				discrim = Math.sqrt(discrim);
-				double result_X1 = calculate();
-				double result_X2 = calculate();
+				double result_X1 = calculate(1);
+				double result_X2 = calculate(-1);
 				labelFirstResult.setText(String.format("%.2f", result_X1));
 				labelSecondResult.setText(String.format("%.2f", result_X2));
 			}
@@ -292,11 +290,11 @@ public class CalculateSquareEquation {
 	}
 	
 	// Calculates the solutions of the equation
-	private double calculate() {
+	private double calculate(int sign) {
 		if (firstCoefficient == 0) {
 			return -thirdCoefficient / secondCoefficient;
 		} else {
-			return (-secondCoefficient + discrim) / (2 * firstCoefficient);
+			return (-secondCoefficient + discrim * sign) / (2 * firstCoefficient);
 		}
 	}
 }
