@@ -30,7 +30,7 @@ public class CalculateSquareEquation {
 	private double firstCoefficient;
 	private double secondCoefficient;
 	private double thirdCoefficient;
-	private double discrim;
+	private double discriminant;
 
 	/**
 	 * Launch the application.
@@ -238,35 +238,20 @@ public class CalculateSquareEquation {
 			firstCoefficient = coefficientSign(Double.parseDouble(textFirstCoefficient.getText()), signA);
 			secondCoefficient = coefficientSign(Double.parseDouble(texteScondCoefficient.getText()), signB);
 			thirdCoefficient = coefficientSign(Double.parseDouble(textThirdCoefficient.getText()), signC);
-			discrim = discriminant();
-			if (discrim < 0 || (firstCoefficient == 0 && secondCoefficient == 0 && thirdCoefficient != 0)) {
-				labelResultMessages.setText("Уравнението няма реални корени.");
-				labelDiscriminant.setText("" + discrim);
-				labelFirstResult.setText("n/a");
-				labelSecondResult.setText("n/a");
+			discriminant = discriminant();
+			if (discriminant < 0 || (firstCoefficient == 0 && secondCoefficient == 0 && thirdCoefficient != 0)) {
+				setMessages(2,7,5,5);
 			} else if (firstCoefficient == 0 && secondCoefficient == 0 && thirdCoefficient == 0) {
-				labelResultMessages.setText("Всички реални числа са корени.");
-				labelDiscriminant.setText("" + discrim);
-				labelFirstResult.setText("(-∞,+∞)");
-				labelSecondResult.setText("(-∞,+∞)");
+				setMessages(3,7,6,6);
 			} else {
-				labelResultMessages.setText("Резултат :");
-				labelDiscriminant.setText(String.format("%.2f", discrim));
-				discrim = Math.sqrt(discrim);
-				double result_X1 = calculate(1);
-				double result_X2 = calculate(-1);
-				labelFirstResult.setText(String.format("%.2f", result_X1));
-				labelSecondResult.setText(String.format("%.2f", result_X2));
+				setMessages(1,7,8,9);
 			}
 		} catch (Exception e) {
-			labelResultMessages.setText("Некоректно въведени параметри!");
-			labelDiscriminant.setText("n/a");
-			labelFirstResult.setText("n/a");
-			labelSecondResult.setText("n/a");
+			setMessages(4,5,5,5);
 		}
 	}
 	
-	// Changes the character before the coefficient
+	// Changes the sign before the coefficient
 	private String changeSign(String sign) {
 		if (sign.equals("+")) {
 			return "-";
@@ -275,7 +260,7 @@ public class CalculateSquareEquation {
 		}
 	}
 
-	// Specifies the character before the coefficient
+	// Specifies the sign before the coefficient
 	private double coefficientSign(double coefficient, String sign) {
 		if (sign.equals("-")) {
 			coefficient = -coefficient;
@@ -294,7 +279,50 @@ public class CalculateSquareEquation {
 		if (firstCoefficient == 0) {
 			return -thirdCoefficient / secondCoefficient;
 		} else {
-			return (-secondCoefficient + discrim * sign) / (2 * firstCoefficient);
+			return (- secondCoefficient + Math.sqrt(discriminant) * sign) / (2 * firstCoefficient);
 		}
+	}
+	
+	// Set messages
+	private void setMessages(int m1, int m2, int m3, int m4) {
+		labelResultMessages.setText(message(m1));                  //
+		labelDiscriminant.setText(message(m2));                   // m1,m2,m3 and m4 - numbers of the messages    
+		labelFirstResult.setText(message(m3));                   // from the method message(int numberOfTheMessage)
+		labelSecondResult.setText(message(m4));                 // 
+	}
+	
+	// Messages
+	private String message(int numberOfTheMessage) {
+		String message = "";
+		switch (numberOfTheMessage) {
+		case 1:
+			message = "Резултат";
+			break;
+		case 2:
+			message = "Уравнението няма реални корени.";
+			break;
+		case 3:
+			message = "Всички реални числа са корени.";
+			break;
+		case 4:
+			message = "Некоректно въведени параметри!";
+			break;
+		case 5:
+			message = "n/a";
+			break;
+		case 6:
+			message = "(-∞,+∞)";
+			break;
+		case 7 :
+			message = String.format("%.2f", discriminant);
+			break;
+		case 8:
+			message = String.format("%.2f", calculate(1));
+			break;
+		case 9:
+			message = String.format("%.2f", calculate(-1));
+			break;
+		}
+		return message;
 	}
 }
